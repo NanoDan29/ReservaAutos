@@ -1,32 +1,38 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import AuthRouter from './auth';
 import LandingRouter from './landing';
 import AutosRouter from './autos';
 import Private from './private';
 import { useSelector } from 'react-redux'
+import Public from './public'
 
 
 const Routes = () => {
     const { loginState } = useSelector((info) => info.auth)
-    console.log(loginState)
+
     return (
         <Router>
             <Switch>
-                <Route
+                <Public
                     path="/auth"
-                    render={AuthRouter}
+                    auntenticar={loginState}
+                    Component={AuthRouter}
+
                 />
 
                 <Private
+                    path="/autos"
                     auntenticar={loginState}
                     Component={AutosRouter}
-                    path="/autos"
+
                 />
 
-                <Route
+                <Public
                     path="/"
-                    render={LandingRouter}
+                    auntenticar={loginState}
+                    Component={LandingRouter}
+
                 />
             </Switch>
         </Router>

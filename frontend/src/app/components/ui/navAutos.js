@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { logout } from '../../actions/actionAuth';
+import { useDispatch, useSelector } from 'react-redux'
 
 
 
-const Nav = () => {
+const NavAutos = () => {
 
     let flagAccion = true
     const accion = () => {
@@ -22,11 +24,20 @@ const Nav = () => {
         }
     }
 
+
+    const dispatch = useDispatch()
+
+    const undeClick = () => {
+        dispatch(logout())
+    }
+
+    const { loginState } = useSelector((info) => info.auth)
+
     return (
 
 
         <Fragment>
-            <nav id="navbarMenuHeroA" className="navbar is-dark">
+            <nav id="navbarMenuHeroA" className="navbar is-black">
                 <div className="navbar-brand">
                     <Link to="/home" className="navbar-item">
                         <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo" />
@@ -39,15 +50,11 @@ const Nav = () => {
                 </div>
                 <div id="navMenuColordark-example" className="navbar-menu">
                     <div className="navbar-end">
-                        <Link to="/home" className="navbar-item is-active">Home</Link>
-                        <Link to="/about" className="navbar-item">Nosotros</Link>
+                        <Link to="/autos/page1" className="navbar-item is-active">Home</Link>
+                        <Link to="/autos/page2" className="navbar-item">Autos</Link>
+                        <Link to="/autos/perfilUsuario" className="navbar-item">Pefil</Link>
                         <span className="navbar-item">
-                            <Link to="/auth/login" className="button is-primary">
-                                <span className="icon">
-                                    <i className="fab fa-github"></i>
-                                </span>
-                                <span>Login</span>
-                            </Link>
+                            {loginState && <button className="button is-primary" onClick={undeClick}>Salir</button>}
                         </span>
                     </div>
                 </div>
@@ -58,4 +65,4 @@ const Nav = () => {
     )
 }
 
-export default Nav;
+export default NavAutos;

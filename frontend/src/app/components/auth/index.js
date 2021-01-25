@@ -1,7 +1,8 @@
-import Login from './login';
-import Register from './register';
+// import Login from './login';
+// import Register from './register';
+import Signin_signup from './signin_signup'
 
 export {
-    Login,
-    Register
+  
+    Signin_signup
 }

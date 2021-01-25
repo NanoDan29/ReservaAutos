@@ -1,3 +1,4 @@
 import authReducer from './authReducer'
+import usuarioReducer from './usuarioReducer'
 
-export {authReducer}
+export {authReducer, usuarioReducer}

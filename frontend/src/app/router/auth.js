@@ -1,24 +1,19 @@
 import React from 'react';
-import { Switch, Route,Redirect } from 'react-router-dom';
-import { Login,Register } from '../components/auth'
-import '../styles/components/auth.css'
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { Signin_signup } from '../components/auth'
+
+
 
 const AuthRouter = () => {
+    let { url } = useRouteMatch()
     return (
         <Switch>
             <Route
-                path="/auth/login"
+                path={`${url}/login`}
                 exact={true}
-                component={ Login }
+                component={Signin_signup}
             />
-
-            <Route
-                path="/auth/register"
-                exact={true}
-                component={ Register }
-            />
-
-            <Redirect to="/auth/login"/>
+            <Redirect to={`${url}/login`} />
         </Switch>
     )
 }

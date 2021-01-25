@@ -1,128 +1,85 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+// import Types from '../../types'
 import { useDispatch } from 'react-redux'
-import Types from '../../types'
-import { Link } from 'react-router-dom'
-import log from '../../img/log.svg'
-import register from '../../img/register.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Link} from 'react-router-dom'
+import {login as LoginEntrar} from '../../actions/actionAuth'
+import {
+    facebook,
+    twitter,
+    linkedin, google, user, unlock
+} from '../../img'
+
+const Login = (props) => {
 
 
-const Login = () => {
-    const { login } = Types
-    const dispatch = useDispatch()
+    // const { login } = Types
+     const dispatch = useDispatch()
+
+    // const undeClick = () => {
+    //     dispatch(
+    //         {
+    //             type: login,
+    //             payload: { loginState: true }
+    //         })
+    // }
 
 
 
-    const undeClick = () => {
-        dispatch(
-            {
-                type: login,
-                payload: { loginState: true }
-            })
+    // Leer datos formulario
+    const [usuario, guardarUsuario] = useState({
+        email: '',
+        password: ''
+    })
+
+    const actualizarState = e => {
+        guardarUsuario({
+            ...usuario,
+            [e.target.name]: e.target.value
+        });
+
     }
 
+    
+
+    const iniciarSesion = async (e) => {
+        e.preventDefault()
+        let { email, password } = usuario
+        dispatch(LoginEntrar(email,password))
+       
+    }
 
 
     return (
         <Fragment>
-           
-
-            <div className="contenedor">
-                <div className="forms-contenedor">
-                    <div className="signin-signup">
-                        <form action="#" className="sign-in-forma">
-                            <h2 className="titulo">Sign in</h2>
-                            <div className="input-field">
-                                <i className="fas fa-user"></i>
-                                <input type="text" placeholder="Username" />
-                            </div>
-                            <div className="input-field">
-                                <i className="fas fa-lock"></i>
-                                <input type="password" placeholder="Password" />
-                            </div>
-                            <input type="submit" value="Login" className="btn solid" />
-                            <p className="social-text">Or Sign in with social platforms</p>
-                            <div className="social-media">
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-facebook-f"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-twitter"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-google"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-linkedin-in"></i>
-                                </Link>
-                            </div>
-                        </form>
-                        <form action="#" className="sign-up-forma">
-                            <h2 className="titulo">Sign up</h2>
-                            <div className="input-field">
-                                <i className="fas fa-user"></i>
-                                <input type="text" placeholder="Username" />
-                            </div>
-                            <div className="input-field">
-                                <i className="fas fa-envelope"></i>
-                                <input type="email" placeholder="Email" />
-                            </div>
-                            <div className="input-field">
-                                <i className="fas fa-lock"></i>
-                                <input type="password" placeholder="Password" />
-                            </div>
-                            <input type="submit" className="btn" value="Sign up" />
-                            <p className="social-text">Or Sign up with social platforms</p>
-                            <div className="social-media">
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-facebook-f"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-twitter"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-google"></i>
-                                </Link>
-                                <Link href="#" className="social-icon">
-                                    <i className="fab fa-linkedin-in"></i>
-                                </Link>
-                            </div>
-                        </form>
-                    </div>
+            <form className="sign-in-form" onSubmit={iniciarSesion}>
+                <h2 className="title">Logearse</h2>
+                <div className="input-field">
+                    <img src={user} alt="icono usuario" />
+                    <input type="text" name="email" placeholder="Username" onChange={actualizarState} />
                 </div>
-
-                <div className="panels-contenedor">
-                    <div className="panelAuth left-panel">
-                        <div className="content">
-                            <h3>New here ?</h3>
-                            <p>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                                ex ratione. Aliquid!
-            </p>
-                            <button className="btn transparent" id="sign-up-btn">
-                                Sign up
-            </button>
-                        </div>
-                        <img src={log} className="image" alt="" />
-                    </div>
-                    <div className="panelAuth right-panel">
-                        <div className="content">
-                            <h3>One of us ?</h3>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                                laboriosam ad deleniti.
-            </p>
-                            <button className="btn transparent" id="sign-in-btn">
-                                Sign in
-            </button>
-                        </div>
-                        <img src={register} className="image" alt="" />
-                    </div>
+                <div className="input-field">
+                    <img src={unlock} alt="icono contraseña" />
+                    <input type="password" name="password" placeholder="Password" onChange={actualizarState} />
                 </div>
-            </div>
+                <input type="submit" value="Iniciar Sesion" className="btn solid" />
+                <p className="social-text">O ingresa con las siguientes plataformas</p>
+                <div className="social-media">
+                    <Link to="/" className="social-icon">
+                        <img src={facebook} alt="icono facebook" />
+                    </Link>
+                    <Link to="/" className="social-icon">
+                        <img src={twitter} alt="icono twitter" />
+                    </Link>
+                    <Link to="/" className="social-icon">
+                        <img src={google} alt="icono google" />
+                    </Link>
+                    <Link to="/" className="social-icon">
+                        <img src={linkedin} alt="icono linkedin" />
+                    </Link>
+                </div>
+            </form>
+         
 
-            {/* <button onClick={undeClick}>Entrar</button>
-            <Link to='/autos/page1'>Entrar </Link> */}
         </Fragment>
     )
 }
